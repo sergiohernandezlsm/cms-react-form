@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUsersThunk, getUserThunk } from '../thunks/users';
+import { getUsersThunk, deleteUserThunk } from '../thunks/users';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -27,11 +27,14 @@ function App() {
 
   useEffect(() => {
     dispatch(getUsersThunk());
-    dispatch(getUserThunk(4));
   }, [dispatch]);
 
   const editUser = (user) => {
     console.log(`this is the user => ${user}`);
+  }
+
+  const deleteUser = (user) => {
+    dispatch(deleteUserThunk(user));
   }
 
   return (
@@ -65,6 +68,7 @@ function App() {
                   size="large"
                   className={classes.button}
                   startIcon={<DeleteIcon />}
+                  onClick={() => deleteUser(user.id)}
                 >
                   Delete
             </Button>

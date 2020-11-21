@@ -1,6 +1,4 @@
-import { GET_USERS } from './types';
-import { GET_USER } from './types';
-import { CREATE_USER } from './types';
+import { GET_USERS, GET_USER, CREATE_USER, DELETE_USER } from './types';
 
 export const getUsers = data => ({
   type: GET_USERS,
@@ -15,4 +13,9 @@ export const getUser = data => ({
 export const createUser = data => ({
   type: CREATE_USER,
   user: data
+});
+
+export const deleteUser = data => ({
+  type: DELETE_USER,
+  userId: data
 });
