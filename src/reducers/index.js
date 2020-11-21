@@ -1,22 +1,23 @@
 import { combineReducers } from 'redux';
-import { GET_USERS, GET_USER } from '../actions/types';
+import { GET_USERS, CREATE_USER } from '../actions/types';
 
 let initialState = {
   users: [],
-  user: ''
 };
 
 const users = (state = initialState, action) => {
+  console.log(state);
   switch (action.type) {
     case GET_USERS:
       return {
         ...state,
         users: action.users
       };
-    case GET_USER:
+    case CREATE_USER:
+      console.log(action.user);
       return {
         ...state,
-        user: action.user
+        users: state.users.concat(action.user)
       };
     default:
       return state
