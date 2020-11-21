@@ -14,10 +14,9 @@ const users = (state = initialState, action) => {
         users: action.users
       };
     case CREATE_USER:
-      console.log(action.user);
       return {
         ...state,
-        users: state.users.concat(action.user)
+        users: [...state.users, action.user]
       };
     default:
       return state
