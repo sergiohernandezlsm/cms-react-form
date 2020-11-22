@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import { GET_USERS, CREATE_USER, DELETE_USER } from '../actions/types';
+import { GET_USERS, GET_USER, CREATE_USER, DELETE_USER } from '../actions/types';
 
 let initialState = {
   users: [],
+  user: ''
 };
 
 const users = (state = initialState, action) => {
@@ -11,6 +12,11 @@ const users = (state = initialState, action) => {
       return {
         ...state,
         users: action.users
+      };
+    case GET_USER:
+      return {
+        ...state,
+        user: action.user
       };
     case CREATE_USER:
       return {

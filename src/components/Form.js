@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
 import { createUserThunk } from '../thunks/users';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
 const BasicTextFields = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const dataUser = useSelector(state => state.users.user);
+  console.log(dataUser)
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
