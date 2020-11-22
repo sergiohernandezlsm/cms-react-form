@@ -17,20 +17,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function BasicTextFields() {
+const BasicTextFields = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [state, setState] = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  })
 
-  const newUser = (name, lastName, email) => {
-    const data = {
-      firstName: name,
-      lastName: lastName,
-      email: email
-    }
-    dispatch(createUserThunk(data));
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setState({
+      ...state,
+      [e.target.name]: value
+    })
+  }
+
+  const addUser = () => {
+    dispatch(createUserThunk({
+      firstName: state.firstName,
+      lastName: state.lastName,
+      email: state.email
+    }));
   }
 
   return (
@@ -38,9 +47,9 @@ export default function BasicTextFields() {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <TextField onChange={(e) => setName(e.target.value)} className={classes.fieldStyle} id="outlined-basic" label="First Name" variant="outlined" />
-            <TextField onChange={(e) => setLastName(e.target.value)} className={classes.fieldStyle} id="outlined-basic" label="Last Name" variant="outlined" />
-            <TextField onChange={(e) => setEmail(e.target.value)} className={classes.fieldStyle} id="outlined-basic" label="Email" variant="outlined" />
+            <TextField value={state.firstName} name="firstName" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="First Name" variant="outlined" />
+            <TextField value={state.lastName} name="lastName" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="Last Name" variant="outlined" />
+            <TextField value={state.email} name="email" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="Email" variant="outlined" />
           </Paper>
         </Grid>
         <Grid item xs={6}>
@@ -51,7 +60,7 @@ export default function BasicTextFields() {
               size="large"
               className={classes.button}
               startIcon={<SaveIcon />}
-              onClick={() => newUser(name, lastName, email)}
+              onClick={addUser}
             >
               Save
             </Button>
@@ -61,3 +70,5 @@ export default function BasicTextFields() {
     </form>
   );
 }
+
+export default BasicTextFields;
