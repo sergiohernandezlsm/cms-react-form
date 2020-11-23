@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -21,17 +21,38 @@ const BasicTextFields = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const dataUser = useSelector(state => state.users.user);
-  console.log(dataUser)
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
     email: ''
   })
 
+  const [newState, setNewState] = useState({
+    firstName: '',
+    lastName: '',
+    email: ''
+  })
+
+  useEffect(() => {
+    setNewState({
+      firstName: dataUser.firstName,
+      lastName: dataUser.lastName,
+      email: dataUser.email
+    })
+  }, [dataUser])
+
+  console.log(dataUser)
+
   const handleChange = (e) => {
     const value = e.target.value;
-    setState({
-      ...state,
+    if (!dataUser) {
+      setState({
+        ...state,
+        [e.target.name]: value
+      })
+    }
+    setNewState({
+      ...newState,
       [e.target.name]: value
     })
   }
@@ -49,9 +70,9 @@ const BasicTextFields = () => {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <TextField value={state.firstName} name="firstName" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="First Name" variant="outlined" />
-            <TextField value={state.lastName} name="lastName" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="Last Name" variant="outlined" />
-            <TextField value={state.email} name="email" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="Email" variant="outlined" />
+            <TextField value={dataUser ? newState.firstName || '' : state.firstName} name="firstName" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="First Name" variant="outlined" />
+            <TextField value={dataUser ? newState.lastName || '' : state.lastName} name="lastName" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="Last Name" variant="outlined" />
+            <TextField value={dataUser ? newState.email || '' : state.email} name="email" onChange={handleChange} className={classes.fieldStyle} id="outlined-basic" label="Email" variant="outlined" />
           </Paper>
         </Grid>
         <Grid item xs={6}>
