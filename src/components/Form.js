@@ -63,6 +63,11 @@ const BasicTextFields = () => {
       lastName: state.lastName,
       email: state.email
     }));
+    setState({
+      firstName: '',
+      lastName: '',
+      email: ''
+    });
   }
 
   return (
