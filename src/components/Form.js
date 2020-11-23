@@ -90,7 +90,7 @@ const BasicTextFields = () => {
               startIcon={<SaveIcon />}
               onClick={addUser}
             >
-              Save
+              {!dataUser ? 'Save' : 'Update'}
             </Button>
           </Paper>
         </Grid>
