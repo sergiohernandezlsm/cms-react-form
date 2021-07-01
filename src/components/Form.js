@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
-import { createUserThunk } from '../thunks/users';
+import { createUserThunk, updateUserThunk } from '../thunks/users';
 import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,16 +58,19 @@ const BasicTextFields = () => {
   }
 
   const addUser = () => {
-    dispatch(createUserThunk({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      email: state.email
-    }));
+    if (!dataUser) {
+      dispatch(createUserThunk({
+        firstName: state.firstName,
+        lastName: state.lastName,
+        email: state.email
+      }));
+    }
     setState({
       firstName: '',
       lastName: '',
       email: ''
     });
+    dispatch(updateUserThunk(newState, dataUser.id));
   }
 
   return (

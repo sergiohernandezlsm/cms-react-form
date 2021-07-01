@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUsers, getUser, createUser, deleteUser } from '../actions';
+import { getUsers, getUser, createUser, deleteUser, updateUser } from '../actions';
 
 export const getUsersThunk = () => async dispatch => {
   const { data } = await axios.get(`http://localhost:8080/users`);
@@ -19,4 +19,9 @@ export const createUserThunk = (user) => async dispatch => {
 export const deleteUserThunk = (userId) => async dispatch => {
   await axios.delete(`http://localhost:8080/users/${userId}`);
   dispatch(deleteUser(userId));
+}
+
+export const updateUserThunk = (userData, userId) => async dispatch => {
+  const { data } = await axios.patch(`http://localhost:8080/users/${userId}`, userData);
+  dispatch(updateUser(data));
 }

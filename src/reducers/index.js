@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_USERS, GET_USER, CREATE_USER, DELETE_USER } from '../actions/types';
+import { GET_USERS, GET_USER, CREATE_USER, DELETE_USER, UPDATE_USER } from '../actions/types';
 
 let initialState = {
   users: [],
@@ -22,6 +22,18 @@ const users = (state = initialState, action) => {
       return {
         ...state,
         users: [...state.users, action.user]
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        users: state.users.map(x => {
+          if (x.id !== action.user.id) {
+            return x;
+          }
+          return {
+            ...action.user
+          };
+        })
       };
     case DELETE_USER:
       return {
